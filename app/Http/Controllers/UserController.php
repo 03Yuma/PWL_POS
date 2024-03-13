@@ -25,15 +25,15 @@ class UserController extends Controller
         // ];
         // UserModel::where('username','customer-1')->update($data);
 
-        $data = [
-            'level_id'=>2,
-            'username'=>'manager_tiga',
-            'nama'=>'Manager 3',
-            'password'=>Hash::make('12345')
-        ];
-        UserModel::create($data);
+        // $data = [
+        //     'level_id'=>2,
+        //     'username'=>'manager_tiga',
+        //     'nama'=>'Manager 3',
+        //     'password'=>Hash::make('12345')
+        // ];
+        // UserModel::create($data);
 
-        $user=UserModel::all();
+        $user=UserModel::where('username','manager9')->firstOrFail();
         return view('user',['data'=>$user]);
     }
 }
