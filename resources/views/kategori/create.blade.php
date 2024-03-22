@@ -23,7 +23,7 @@
                     </div>
                 </div>
 
-                <div class="cars-footer">
+                <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </form>
