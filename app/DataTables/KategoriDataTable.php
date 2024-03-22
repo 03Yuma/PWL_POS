@@ -20,11 +20,17 @@ class KategoriDataTable extends DataTable
      * @param QueryBuilder $query Results from query() method.
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
-    {
-        return (new EloquentDataTable($query))
-            /* ->addColumn('action', 'kategori.action') */
-            ->setRowId('id');
-    }
+{
+    return (new EloquentDataTable($query))
+    ->addColumn('action', function ($data) {
+        return '<div class="btn-group" role="group">' .
+            '<a href="/kategori/edit/' . $data->kategori_id . '" type="button" class="btn btn-sm btn-warning mr-2">Edit</a>' .
+            '<a href="/kategori/delete/' . $data->kategori_id . '" type="button" class="btn btn-sm btn-danger">Delete</a>' .
+            '</div>';
+    })
+    ->setRowId('id');
+}
+
     /**
      * Get the query source of dataTable.
      */
@@ -69,6 +75,11 @@ class KategoriDataTable extends DataTable
             Column::make('kategori_nama'),
             Column::make('created_at'),
             Column::make('updated_at'),
+            Column::make('action')
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
         ];
     }
     /**
@@ -78,4 +89,6 @@ class KategoriDataTable extends DataTable
     {
         return 'Kategori_' . date('YmdHis');
     }
+
+
 }

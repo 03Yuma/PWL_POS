@@ -10,6 +10,11 @@
             <div class="card-header">Manage Kategori</div>
             <div class="card-body">
                 {{$dataTable->table()}}
+
+                <a href="{{ route('/kategori/create') }}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Add Data
+                </a>                
+                
             </div>
         </div>
     </div>

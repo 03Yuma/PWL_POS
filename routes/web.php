@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Levelcontroller;
 use App\Http\Controllers\kategoriController;
+use App\Http\Controllers\KategoriController as ControllersKategoriController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
@@ -32,5 +33,8 @@ Route::get('/user/hapus/{id}',[UserController::class,'hapus']);
 Route::get('/hello', function () {return view('hello', ['name' => 'Yuma']);  }); 
 Route::get('/hello',[WelcomeController::class,'hello']);
 Route::get('/kategori',[kategoriController::class,'index']);
-Route::get('/kategori/create',[kategoriController::class,'create']);
+Route::get('/kategori/create',[kategoriController::class,'create'])->name('/kategori/create');
 Route::post('/kategori',[kategoriController::class,'store']);
+Route::get('/kategori/edit{id}', [kategoriController::class, 'edit']);
+Route::put('/kategori/edit_simpan/{id}',[kategoriController::class,'edit_simpan']);
+Route::get('/kategori/delete/{id}',[kategoriController::class,'delete']);
