@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,3 +39,9 @@ Route::post('/kategori',[kategoriController::class,'store']);
 Route::get('/kategori/edit{id}', [kategoriController::class, 'edit']);
 Route::put('/kategori/edit_simpan/{id}',[kategoriController::class,'edit_simpan']);
 Route::get('/kategori/delete/{id}',[kategoriController::class,'delete']);
+Route::get('/kategori/create',[KategoriController::class,'create']);
+Route::post('/kategori',[kategoriController::class,'store']);
+Route::get('/user/create',[userController::class,'create']);
+Route::post('/user',[userController::class,'store']);
+Route::get('/level/create',[Levelcontroller::class,'create']);
+Route::post('/level',[Levelcontroller::class,'store']);
