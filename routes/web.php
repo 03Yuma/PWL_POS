@@ -47,3 +47,4 @@ Route::post('/user',[userController::class,'store']);
 Route::get('/level/create',[Levelcontroller::class,'create']);
 Route::post('/level',[Levelcontroller::class,'store']);
 Route::resource('m_user',POScontroller::class);
+Route::get('/',[WelcomeController::class,'index']);
