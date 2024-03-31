@@ -3,6 +3,7 @@
 use App\Http\Controllers\Levelcontroller;
 use App\Http\Controllers\kategoriController;
 use App\Http\Controllers\KategoriController as ControllersKategoriController;
+use App\Http\Controllers\POScontroller;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
@@ -45,3 +46,4 @@ Route::get('/user/create',[userController::class,'create']);
 Route::post('/user',[userController::class,'store']);
 Route::get('/level/create',[Levelcontroller::class,'create']);
 Route::post('/level',[Levelcontroller::class,'store']);
+Route::resource('m_user',POScontroller::class);
