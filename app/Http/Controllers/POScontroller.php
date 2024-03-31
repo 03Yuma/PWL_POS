@@ -37,6 +37,7 @@ class POSController extends Controller
             'user_id' => 'max:20',
             'username' => 'required',
             'nama' => 'required',
+            'level_id' => 'exists:m_level,level_id',
         ]);
 
         // Fungsi eloquent untuk menambah data
@@ -53,10 +54,6 @@ class POSController extends Controller
     {
         $useri = m_user::findOrFail($id);
         return view('m_user.show', compact('useri'));
-    }
-
-    public function level(){
-        return $this->belongsTo(LevelMode::class,'level_id');
     }
 
     /**
@@ -77,6 +74,7 @@ class POSController extends Controller
             'username' => 'required',
             'nama' => 'required',
             'password' => 'required',
+            'level_id' => 'required',
         ]);
 
         // Fungsi eloquent untuk mengupdate data inputan kita
