@@ -66,8 +66,6 @@ class UserController extends Controller
         return view('user.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level, 'activeMenu' => $activeMenu]);
     }
 
-    
-
     public function store(Request $request)
     {
         $request->validate([
@@ -104,7 +102,7 @@ class UserController extends Controller
 
         return view('user.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'user' => $user, 'activeMenu' => $activeMenu]);
     }
-
+    
     public function edit(string $id)
     {
         $user = UserModel::find($id);

@@ -71,7 +71,8 @@
                 </form>
             @endempty
         </div>
-</div> @endsection
+    </div>
+ @endsection
 
 @push('css')
     @endpush @push('js')
