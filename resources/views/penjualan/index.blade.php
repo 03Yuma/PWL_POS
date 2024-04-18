@@ -4,13 +4,14 @@
     <div class="card card-outline card-primary">
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
+
         </div>
         <div class="card-body">
             @if (session('success'))
                 <div class="alert alert-success">{{ session('success')}}</div>
             @endif
             @if (session('error'))
-                <div class="alert alert-denger">{{ session('error')}}</div>
+                <div class="alert alert-danger">{{ session('error')}}</div>
             @endif
             <div class="row">
                 <div class="col-md-12">
@@ -32,10 +33,11 @@
                 <thead>
                     <tr>
                         <th>ID Penjualan</th>
-                        <th>User</th>
+                        <th>User id</th>
                         <th>Pembeli</th>
-                        <th>Kode Penjualan</th>
-                        <th>Tanggal Penjualan</th>
+                        <th>Barang ID</th>
+                        <th>Harga</th>
+                        <th>Jumlah</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -50,7 +52,7 @@
             var dataTable = $('#table_penjualan').DataTable({
                 serverSide: true,
                 ajax: {
-                    "url": "{{ url('penjualan/list') }}",
+                    "url": "{{ ('penjualan/list') }}",
                     "dataType": "json",
                     "type": "POST",
                     "data": function (d) {
@@ -59,13 +61,13 @@
                 },
                 columns: [
                     {
-                        data: "DT_RowIndex",
+                        data: "penjualan_id",
                         className: "text-center",
                         orderable: false,
                         searchable: false
                     },
                     {
-                        data: "user.username",
+                        data: "user_id",
                         className: "",
                         orderable: true,
                         searchable: true
@@ -77,13 +79,19 @@
                         searchable: true
                     },
                     {
-                        data: "penjualan_kode",
+                        data: "barang_id",
                         className: "",
                         orderable: true,
                         searchable: true
                     },
                     {
-                        data: "penjualan_tanggal",
+                        data: "harga",
+                        className: "",
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: "jumlah",
                         className: "",
                         orderable: true,
                         searchable: true

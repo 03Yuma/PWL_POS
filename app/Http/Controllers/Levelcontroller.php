@@ -44,6 +44,24 @@ class LevelController extends Controller
             ->make(true);
     } 
 
+    public function show(string $id)
+    {
+        $level = LevelModel::find($id);
+
+        $breadcrumb = (object) [
+            'title' => 'Detail level',
+            'list' => ['Home', 'level', 'Detail']
+        ];
+
+        $page = (object) [
+            'title' => 'Detail level'
+        ];
+
+        $activeMenu = 'level';
+
+        return view('level.show', ['breadcrumb' => $breadcrumb, 'level'=>$level,'page' => $page, 'activeMenu' => $activeMenu]);
+    }
+
     public function create(): View
     {
         $breadcrumb = (object)[

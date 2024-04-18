@@ -10,7 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\barangController;
 use App\Http\Controllers\penjualanController;
 use App\Http\Controllers\stokController;
-
+use Monolog\Level;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,6 +66,7 @@ Route::group(['prefix'=>'level'],function(){
     Route::get('/',[LevelController::class,'index'])->name('level.index');
     Route::post('/list',[LevelController::class,'list'])->name('level.list');
     Route::get('/create',[LevelController::class,'create'])->name('level.create');
+    Route::get('/{id}',[LevelController::class,'show']);
     Route::post('/',[LevelController::class,'store']);
     Route::get('/{id}/edit', [LevelController::class,'edit'])->name('level.edit');
     Route::put('/{id}', [LevelController::class,'update']);
@@ -94,6 +95,7 @@ Route::group(['prefix'=>'stok'],function(){
     Route::post('/list',[StokController::class,'list']);
     Route::get('/create',[stokController::class,'create']);
     Route::post('/',[StokController::class,'store']);
+    Route::get('/{id}',[StokController::class,'show']);
     Route::get('/{id}',[stokController::class,'show']);
     Route::get('/{id}/edit', [StokController::class,'edit']);
     Route::put('/{id}', [StokController::class,'update']);
@@ -105,4 +107,5 @@ Route::group(['prefix'=>'penjualan'],function(){
     Route::post('/',[penjualanController::class,'store']);
     Route::get('/{id}',[penjualanController::class,'show']);
     Route::delete('/{id}',[penjualanController::class,'destroy']);
+    Route::get('/{id}/edit', [penjualanController::class,'edit']);
 });

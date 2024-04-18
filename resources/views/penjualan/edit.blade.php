@@ -6,24 +6,23 @@
             <div class="card-tools"></div>
         </div>
         <div class="card-body">
-            @if (!$stok)
+            @if (!$penjualan)
                 <div class="alert alert-danger alert-dismissible">
                     <h5><i class="icon fas fa-ban"></i> Kesalahan!</h5>
                     Data yang Anda cari tidak ditemukan.
                 </div>
-                <a href="{{ url('stok') }}" class="btn btn-sm btn-default mt-2">Kembali</a>
+                <a href="{{ url('penjualan') }}" class="btn btn-sm btn-default mt-2">Kembali</a>
             @else
-                <form method="POST" action="{{ url('/stok/' . $stok->stok_id) }}" class="form-horizontal">
+                <form method="POST" action="{{ url('/penjualan/' . $penjualan->penjualan_id) }}" class="form-horizontal">
                     @csrf
-                    {!! method_field('PUT') !!} 
-
+                    {!! method_field('PUT') !!} <!-- tambahkan baris ini untuk proses edit yang membutuhkan method PUT -->
 
                     <div class="form-group row">
-                        <label class="col-1 control-label col-form-label">barang id</label>
+                        <label class="col-1 control-label col-form-label">ID Penjualan</label>
                         <div class="col-11">
-                            <input type="text" class="form-control" id="barang_id" name="barang_id"
-                                value="{{ old('barang_id', $stok->barang_id) }}" required>
-                            @error('barang_id')
+                            <input type="text" class="form-control" id="penjualan_id" name="penjualan_id"
+                                value="{{ old('penjualan_id', $penjualan->penjualan_id) }}" required>
+                            @error('penjualan_id')
                                 <small class="form-text text-danger">{{ $message }}</small>
                             @enderror
                         </div>
@@ -32,28 +31,38 @@
                         <label class="col-1 control-label col-form-label">user id</label>
                         <div class="col-11">
                             <input type="text" class="form-control" id="user_id" name="user_id"
-                                value="{{ old('user_id', $stok->user_id) }}" required>
+                                value="{{ old('user_id', $penjualan->user_id) }}" required>
                             @error('user_id')
                                 <small class="form-text text-danger">{{ $message }}</small>
                             @enderror
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-1 control-label col-form-label">tanggal stok</label>
+                        <label class="col-1 control-label col-form-label">ID Barang</label>
                         <div class="col-11">
-                            <input type="text" class="form-control" id="stok_tanggal" name="stok_tanggal"
-                                value="{{ old('stok_tanggal', $stok->stok_tanggal) }}" required>
-                            @error('stok_tanggal')
+                            <input type="text" class="form-control" id="barang_id" name="barang_id"
+                                value="{{ old('barang_id', $penjualan->barang_id) }}" required>
+                            @error('barang_id')
                                 <small class="form-text text-danger">{{ $message }}</small>
                             @enderror
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-1 control-label col-form-label">jumlah stok</label>
+                        <label class="col-1 control-label col-form-label">Harga</label>
                         <div class="col-11">
-                            <input type="text" class="form-control" id="stok_jumlah" name="stok_jumlah"
-                                value="{{ old('stok_jumlah', $stok->stok_jumlah) }}" required>
-                            @error('stok_jumlah')
+                            <input type="text" class="form-control" id="harga" name="harga"
+                                value="{{ old('harga', $penjualan->harga) }}" required>
+                            @error('harga')
+                                <small class="form-text text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-1 control-label col-form-label">Jumlah</label>
+                        <div class="col-11">
+                            <input type="text" class="form-control" id="jumlah" name="jumlah"
+                                value="{{ old('jumlah', $penjualan->jumlah) }}" required>
+                            @error('jumlah')
                                 <small class="form-text text-danger">{{ $message }}</small>
                             @enderror
                         </div>
@@ -62,7 +71,7 @@
                         <label class="col-1 control-label col-form-label"></label>
                         <div class="col-11">
                             <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
-                            <a class="btn btn-sm btn-default ml-1" href="{{ url('stok') }}">Kembali</a>
+                            <a class="btn btn-sm btn-default ml-1" href="{{ url('penjualan') }}">Kembali</a>
                         </div>
                     </div>
                 </form>

@@ -4,23 +4,23 @@
     <div class="card card-outline card-primary">
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
-
         </div>
         <div class="card-body">
             @if (session('success'))
                 <div class="alert alert-success">{{ session('success')}}</div>
             @endif
             @if (session('error'))
-                <div class="alert alert-denger">{{ session('error')}}</div>
+                <div class="alert alert-danger">{{ session('error')}}</div>
             @endif
         
-            <table class="table table-bordered table-striped table-hover table-sm" id="table_level">
+            <table class="table table-bordered table-striped table-hover table-sm" id="table_stok">
                 <thead>
                     <tr>
                         <th>ID stok</th>
-                        <th>ID barang</th>
+                        <th>Nama barang</th>
                         <th>ID user</th>
-                        <th>jumlah stok</th>
+                        <th>Jumlah stok</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
             </table>
@@ -28,32 +28,24 @@
     </div>
 @endsection
 
-@push('css')
-@endpush
-
 @push('js')
     <script>
         $(document).ready(function() {
-            var dataUser = $('#table_level').DataTable({
+            var dataTable = $('#table_stok').DataTable({
                 serverSide: true,   
                 ajax: {
-                    "url": "{{ url('level/list') }}",
+                    "url": "{{('stok/list') }}",
                     "dataType": "json",
                     "type": "POST"
                 },
                 columns: [
                     {
-                        data: "DT_RowIndex",    
+                        data: "stok_id",    
                         className: "text-center",
                         orderable: false,
                         searchable: false
                     }, {
-                        data: "stok_id",
-                        className: "",
-                        orderable: true,        
-                        searchable: true        
-                    }, {
-                        data: "barang_id",
+                        data: "barang.barang_nama",
                         className: "",
                         orderable: true,        
                         searchable: true       
@@ -75,10 +67,6 @@
                     }
                 ]
             });
-            $('#level_id').on('change', function() {
-                dataUser.ajax.reload();
-            });
-            
         });
     </script>
 @endpush

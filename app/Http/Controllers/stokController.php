@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\StokModel;
+use App\Models\BarangModel;
 use Illuminate\Http\Request;
-use Yajra\DataTables\DataTables;
+use Yajra\DataTables\Facades\DataTables;
 
 class StokController extends Controller
 {
@@ -24,17 +25,23 @@ class StokController extends Controller
         return view('stok.index', compact('breadcrumb', 'page', 'activeMenu'));
     }
 
-    public function list()
+    public function list(Request $request)
     {
-        $stok = StokModel::all();
+        $stok = StokModel::select('stok_id', 'barang_id', 'user_id', 'stok_tanggal', 'stok_jumlah')
+            ->with(['barang', 'user']);
+
+        if ($request->user_id) {
+            $stok->where('user_id', $request->user_id);
+        }
 
         return DataTables::of($stok)
             ->addIndexColumn()
             ->addColumn('aksi', function ($stok) {
+
                 $btn = '<a href="' . url('/stok/' . $stok->stok_id . '/edit') . '" class="btn btn-warning btn-sm">Edit</a> ';
                 $btn .= '<form class="d-inline-block" method="POST" action="' . url('/stok/' . $stok->stok_id) . '">'
                     . csrf_field() . method_field('DELETE') .
-                    '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakit menghapus data ini?\');">Hapus</button></form>';
+                    '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">Hapus</button></form>';
                 return $btn;
             })
             ->rawColumns(['aksi'])
@@ -57,42 +64,22 @@ class StokController extends Controller
 
         return redirect('/stok')->with('success', 'Data barang berhasil disimpan');
     }
-
-    public function edit($id)
+    public function edit(string $id)
     {
-        $stok = StokModel::findOrFail($id);
+        $stok = stokModel::find($id);
 
         $breadcrumb = (object) [
-            'title' => 'Edit stok barang',
-            'list' => ['Home', 'stok barang', 'Edit']
+            'title' => 'Edit stok',
+            'list' => ['Home', 'stok', 'Edit']
         ];
 
         $page = (object) [
-            'title' => 'Edit stok barang'
+            'title' => 'Edit stok'
         ];
 
         $activeMenu = 'stok';
 
-        return view('stok.edit', compact('breadcrumb', 'page', 'stok', 'activeMenu'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'barang_id' => 'required|integer',
-            'user_id' => 'required|integer',
-            'stok_jumlah' => 'required|integer',
-        ]);
-
-        $stok = StokModel::findOrFail($id);
-
-        $stok->update([
-            'barang_id' => $request->barang_id,
-            'user_id' => $request->user_id,
-            'stok_jumlah' => $request->stok_jumlah,
-        ]);
-
-        return redirect('/stok')->with('success', 'Data barang berhasil diubah');
+        return view('stok.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'stok' => $stok, 'activeMenu' => $activeMenu]);
     }
 
     public function destroy($id)

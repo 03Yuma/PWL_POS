@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\penjualanModel;
 use App\Models\UserModel;
 use Carbon\Carbon;
-use DataTables;
+use Yajra\DataTables\Facades\DataTables;
 
 class penjualanController extends Controller
 {
@@ -20,19 +20,21 @@ class penjualanController extends Controller
             'title' => 'Daftar transaksi penjualan '
         ];
         $activeMenu = 'penjualan'; 
-
         $user = UserModel::all();  
-        return view('penjualan.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'user' => $user, 'activeMenu' => $activeMenu]);
+
+        return view('penjualan.index', ['breadcrumb' => $breadcrumb, 'page' => $page,'user' => $user, 'activeMenu' => $activeMenu]);
     }
+
 
     public function list(Request $request)
     {
-        $penjualans = penjualanModel::select('penjualan_id', 'user_id', 'pembeli', 'penjualan_kode', 'penjualan_tanggal')->with('user');
+        $penjualan = penjualanModel::select('penjualan_id','pembeli','user_id','barang_id','harga','jumlah')->with('user');
 
         if ($request->user_id) {
-            $penjualans->where('user_id', $request->user_id);
+            $penjualan->where('user_id', $request->user_id);
         }
-        return DataTables::of($penjualans)
+
+        return DataTables::of($penjualan)
             ->addIndexColumn() 
             ->addColumn('aksi', function ($penjualan) { // menambahkan kolom aksi
                 $btn = '<a href="' . url('/penjualan/' . $penjualan->penjualan_id) . '" class="btn btn-info btn-sm">Detail</a> ';
@@ -44,6 +46,24 @@ class penjualanController extends Controller
             })
             ->rawColumns(['aksi'])
             ->make(true);
+    }
+
+    public function edit(string $id)
+    {
+        $penjualan = penjualanModel::find($id);
+
+        $breadcrumb = (object) [
+            'title' => 'Edit stok',
+            'list' => ['Home', 'penjualan', 'Edit']
+        ];
+
+        $page = (object) [
+            'title' => 'Edit penjualan'
+        ];
+
+        $activeMenu = 'penjualan';
+
+        return view('penjualan.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'penjualan' => $penjualan, 'activeMenu' => $activeMenu]);
     }
 
     public function store(Request $request)
@@ -97,7 +117,7 @@ class penjualanController extends Controller
 
         $activeMenu = 'penjualan';
 
-        return view('transaksi.show', [
+        return view('penjualan.show', [
             'breadcrumb' => $breadcrumb,
             'page'       => $page,
             'penjualan' => $penjualan,
