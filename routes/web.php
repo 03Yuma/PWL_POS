@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Levelcontroller;
 use App\Http\Controllers\kategoriController;
 use App\Http\Controllers\KategoriController as ControllersKategoriController;
@@ -10,6 +11,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\barangController;
 use App\Http\Controllers\penjualanController;
 use App\Http\Controllers\stokController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ManagerController;
 use Monolog\Level;
 
 /*
@@ -108,4 +111,19 @@ Route::group(['prefix'=>'penjualan'],function(){
     Route::get('/{id}',[penjualanController::class,'show']);
     Route::delete('/{id}',[penjualanController::class,'destroy']);
     Route::get('/{id}/edit', [penjualanController::class,'edit']);
+});
+
+Route::get('login',[AuthController::class,'index'])->name('login');
+Route::get('register',[AuthController::class,'register'])->name('register');
+Route::get('proses_login',[AuthController::class,'proses_login'])->name('proses_login');
+Route::get('logout',[AuthController::class,'logout'])->name('logout');
+Route::get('proses_register',[AuthController::class,'proses_register'])->name('proses_register');
+
+Route::group(['middleware'=>['auth']],function(){
+    Route::group(['middleware'=>['cek_login:1']],function(){
+        Route::resource('admin',AdminController::class);
+    });
+    Route::group(['middleware'=>['cek_login:2']],function(){
+        Route::resource('manager',ManagerController::class);
+    });
 });
