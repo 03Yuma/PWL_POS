@@ -6,7 +6,7 @@ use App\Models\UserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\support\Facades\Validator;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -16,7 +16,7 @@ class AuthController extends Controller
         if ($user) {
             if ($user->level_id=='1') {
                 return redirect()->intended('admin');
-            }else if ($user->level == '2'){
+            }else if ($user->level_id == '2'){
                 return redirect()->intended('manager');
             }
         }
@@ -51,7 +51,7 @@ class AuthController extends Controller
     public function proses_register(Request $request){
         $validator = Validator::make($request->all(),[
             'nama' => 'required',
-            'usernmae' => 'required|unique:m_user',
+            'username' => 'required|unique:m_user',
             'password' => 'required'
         ]);
 
