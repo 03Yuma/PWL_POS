@@ -23,28 +23,41 @@ class AuthController extends Controller
         return view('login');
     }
 
-    public function proses_login(Request $request){
+    public function proses_login(Request $request)
+    {
+        // kita buat validasi pada saat tombol login diklik
+        // validasinya username & password wajib diisi
         $request->validate([
             'username' => 'required',
-            'password' => 'required'
+            'password' => 'required',
         ]);
 
-        $credential = $request->only('username','password');
+        // ambil data request username & password saja
+        $credential = $request->only('username', 'password');
+        //cek jika data username dan password valid (sesuai) dengan data
         if (Auth::attempt($credential)) {
+
+            // kalau berhasil simpan data usernya di variabel $user
             $user = Auth::user();
 
-            if ($user->level_id=='1') {
+            // cek lagi jika level user admin maka arahkan ke halaman admin
+            if ($user->level_id == '1') {
                 return redirect()->intended('admin');
-            }elseif ($user->level_id=='2') {
+            }
+            // tapi jika level usernya user biasa maka arahkan kehalaman user
+            else if ($user->level_id == '2') {
                 return redirect()->intended('manager');
             }
+            // jika belum ada role maka ke halaman /
             return redirect()->intended('/');
         }
-
+        // jika tidak ada data user yang valid maka kembalikan lagi ke halaman login
+        // pastikan kirim pesar error juga kalau login gagal yaa...
         return redirect('login')
             ->withInput()
-            ->withErrors(['Login_gagal'=>'Pastikan kembali username dan password yang dimasukkan sudah benar']);
+            ->withErrors(['login_gagal' => 'Pastikan kembali username dan password yang dimasukkan sudah benar']);
     }
+
     public function register(){
         return view('register');
     }

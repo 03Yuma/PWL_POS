@@ -7,9 +7,6 @@ use App\Models\UserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-
-use function Laravel\Prompts\password;
-
 class RegisterController extends Controller
 {
     public function __invoke(Request $request)
