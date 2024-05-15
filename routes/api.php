@@ -6,10 +6,14 @@ use App\Http\Controllers\Api\RegisterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\LoginController;
+use App\Http\Controllers\Api\LogoutController;
 use App\Http\Controllers\Api\userController;
 use App\Http\Controllers\Api\kategoriController;
 use App\Http\Controllers\Api\KategoriController2;
-use App\Models\KategoriModel;
+use App\Http\Controllers\barangController;
+use App\Http\Controllers\penjualanController;
+use Illuminate\Support\Facades\App;
+use Whoops\Run;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,13 +26,13 @@ use App\Models\KategoriModel;
 |
 */
 
-Route::post('/register',App\Http\Controllers\Api\RegisterController::class)->name('register');
+Route::post('/register',RegisterController::class)->name('register');
 
-Route::post('/login', App\Http\Controllers\Api\LoginController::class)->name('login');
+Route::post('/login', LoginController::class)->name('login');
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('/logout', App\Http\Controllers\Api\LogoutController::class)->name('logout');
+Route::post('/logout', LogoutController::class)->name('logout');
 
 Route::get('levels',[LevelController::class,'index']);
 Route::post('levels',[LevelController::class,'store']);
@@ -48,8 +52,14 @@ Route::get('kategori/{kategori}',[KategoriController2::class,'show']);
 Route::put('kategori/{kategori}',[KategoriController2::class,'update']);
 Route::delete('kategori/{kategori}',[KategoriController2::class,'destroy']);
 
-Route::get('barang',[BarangController2::class,'index']);
-Route::post('barang',[BarangController2::class,'store']);
-Route::get('barang/{barang}',[BarangController2::class,'show']);
-Route::put('barang/{barang}',[BarangController2::class,'update']);
-Route::delete('barang/{barang}',[BarangController2::class,'destroy']);
+// Route::get('barang',[BarangController2::class,'index']);
+// Route::post('barang',[BarangController2::class,'store']);
+// Route::get('barang/{barang}',[BarangController2::class,'show']);
+// Route::put('barang/{barang}',[BarangController2::class,'update']);
+// Route::delete('barang/{barang}',[BarangController2::class,'destroy']);
+
+Route::post('/register1', RegisterController::class)->name("register1");
+Route::post('/barang', BarangController2::class)->name("barang");
+Route::get('/barang/{barang}', BarangController2::class,'show')->name("barang");
+Route::post('/transaksi', penjualanController::class)->name("transaksi");
+Route::get('/transaksi/{transaksi}', penjualanController::class,'show')->name("transaksi");

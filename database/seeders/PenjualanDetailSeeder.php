@@ -16,8 +16,8 @@ class PenjualanDetailSeeder extends Seeder
         for ($i = 1; $i <= 30; $i++) {
             $harga_beli = ($i <= 4) ? rand(500000, 1000000) : rand(1000, 5000);
             $data = [
-                'penjualan_id'=>rand(32,41),
-                'barang_id' => rand(1, 10),
+                'penjualan_id'=>rand(11,20),
+                'barang_id' => rand(11, 20),
                 'harga' => $harga_beli,
                 'jumlah' => rand(1, 5)
             ];
